@@ -7,7 +7,7 @@ const Sidebar = ({ onMenuClick }) => { // ✅ Terima prop di sini
     { id: "feedlot", icon: '📄', label: 'Feedlot' },
     { id: "lncs", icon: '📄', label: 'Lncs' },
     { id: "abattoir", icon: '📄', label: 'Abattoirs' },
-    { id: "cattles", icon: '📄', label: 'Cattles' },
+    { id: "cattle", icon: '📄', label: 'Cattles' },
   ];
 
   return (
