@@ -5,13 +5,15 @@ import HomePage from "./pages/home_page.jsx";
 import AbattoirPage from "./pages/abattoir_page.jsx";
 import LncsPage from "./pages/lncs_page.jsx";
 import CattlePage from "./pages/cattle_page.jsx";
+import Dashboard_page from "./pages/dashboard_page.jsx";
+
 
 function App() {
   const [activeMenu, setActiveMenu] = useState('home');
     const renderPage = () => {
         switch (activeMenu) {
-            case 'home':
-                return <HomePage />;
+            case 'dashboard':
+                return <Dashboard_page />;
             case 'feedlot':
                 return <FeedlotPage />;
             case 'lncs':
@@ -21,7 +23,7 @@ function App() {
             case 'cattle':
                 return <CattlePage />;
             default:
-                return <HomePage />;
+                return <Dashboard_page />;
         }
     };
 

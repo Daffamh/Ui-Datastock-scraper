@@ -3,11 +3,11 @@ import React from 'react';
 
 const Sidebar = ({ onMenuClick }) => { // ✅ Terima prop di sini
   const menuItems = [
-    { id: "home", icon: '🏠', label: 'Home' },
-    { id: "feedlot", icon: '📄', label: 'Feedlot' },
-    { id: "lncs", icon: '📄', label: 'Lncs' },
-    { id: "abattoir", icon: '📄', label: 'Abattoirs' },
-    { id: "cattle", icon: '📄', label: 'Cattles' },
+      {id: "dashboard",icon:'📊', label: 'Dashboard' },
+      { id: "feedlot", icon: '📄', label: 'Feedlot' },
+      { id: "lncs", icon: '📄', label: 'Lncs' },
+      { id: "abattoir", icon: '📄', label: 'Abattoirs' },
+      { id: "cattle", icon: '📄', label: 'Cattles' },
   ];
 
   return (
