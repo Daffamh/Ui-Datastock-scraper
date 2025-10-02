@@ -3,3 +3,4 @@ export { fetchAbattoirs } from './abattoirApi.js';
 export { fetchlncs } from './lncsApi.js';
 export { fetchCattle } from './cattleApi.js';
 export {fetchDashboard} from './dashboardApi.js';
+export { fetchDuplicate } from './duplicateApi.js';

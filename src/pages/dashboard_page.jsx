@@ -1,20 +1,9 @@
-// src/pages/Dashboard.jsx
+
 import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
 import { fetchDashboard } from '../repository/index.js';
 import DataCard from '../components/card_dashboard.jsx';
-
-/**
- * @typedef {Object} DashboardData
- * @property {number} total_cattle
- * @property {number} total_cattle_percent
- * @property {number} downloaded_photos
- * @property {number} downloaded_photos_percent
- * @property {number} duplicate_images
- * @property {number} duplicate_images_percent
- * @property {number} total_abattoirs
- * @property {number} total_abattoirs_percent
- */
+import DuplicatePhotosList from '../components/card_duplicate.jsx';
 
 const initialData = {
     total_cattle: 0,
@@ -44,8 +33,8 @@ function Dashboard() {
             }
         };
 
-        fetchData(); // ✅ Hanya dipanggil sekali di sini
-    }, []); // ✅ Penutup useEffect yang benar
+        fetchData();
+    }, []);
 
     if (loading) {
         return (
@@ -89,6 +78,9 @@ function Dashboard() {
                     trend="positive"
                 />
             </div>
+            <br/>
+
+            <DuplicatePhotosList />
         </div>
     );
 }
