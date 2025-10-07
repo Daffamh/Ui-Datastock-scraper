@@ -1,46 +1,38 @@
 
 import React, { useState, useEffect } from 'react';
 import { fetchDuplicate } from '../repository/index.js';
+import ImagePopup from './card_popup.jsx';
 import './DuplicatePhotoList.css';
 
 const DuplicatePhotosList = () => {
     const [duplicateGroups, setDuplicateGroups] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [selectedGroupPaths, setSelectedGroupPaths] = useState(null); // simpan paths, bukan URL
 
     useEffect(() => {
         const loadDuplicates = async () => {
             try {
                 const data = await fetchDuplicate();
-                if (Array.isArray(data)) {
-                    setDuplicateGroups(data);
-                } else {
-                    throw new Error('Expected an array of duplicate groups');
-                }
+                setDuplicateGroups(Array.isArray(data) ? data : []);
             } catch (err) {
-                setError('Failed to load duplicate photos.');
-                console.error(err);
-            } finally {
-                setLoading(false);
+                console.error('Gagal memuat data duplikat:', err);
+                setDuplicateGroups([]);
             }
         };
-
         loadDuplicates();
     }, []);
 
-    if (loading) {
-        return <p className="loading">Loading duplicate photos...</p>;
-    }
+    const handleGroupClick = (paths) => {
+        setSelectedGroupPaths(paths);
+    };
 
-    if (error) {
-        return <p className="error">{error}</p>;
-    }
+    const closePopup = () => setSelectedGroupPaths(null);
 
     return (
         <div className="duplicate-photos-list">
             <h2>Duplicate Photos List ({duplicateGroups.length} groups)</h2>
+
             {duplicateGroups.length === 0 ? (
-                <p>No duplicate photos found.</p>
+                <p>Tidak ada foto duplikat ditemukan.</p>
             ) : (
                 <table className="duplicate-table">
                     <thead>
@@ -51,14 +43,18 @@ const DuplicatePhotosList = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {duplicateGroups.map((group, index) => (
-                        <tr key={group.hash || index}>
+                    {duplicateGroups.map((group, idx) => (
+                        <tr
+                            key={group.hash || idx}
+                            className="duplicate-group-row"
+                            onClick={() => handleGroupClick(group.paths)}
+                        >
                             <td>{group.hash}</td>
                             <td>{group.count}</td>
                             <td>
                                 <ul className="file-list">
-                                    {group.paths.map((path, idx) => (
-                                        <li key={idx}>{path.split('/').pop()}</li>
+                                    {group.paths.map((path, i) => (
+                                        <li key={i}>{path.split('/').pop()}</li>
                                     ))}
                                 </ul>
                             </td>
@@ -66,6 +62,9 @@ const DuplicatePhotosList = () => {
                     ))}
                     </tbody>
                 </table>
+            )}
+            {selectedGroupPaths && (
+                <ImagePopup images={selectedGroupPaths} onClose={closePopup} />
             )}
         </div>
     );
